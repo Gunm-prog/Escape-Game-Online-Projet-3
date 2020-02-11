@@ -1,51 +1,82 @@
 package com.ocr.emilie;
 
-import java.util.Scanner;
+import com.ocr.emilie.player.*;
 
-/**
- *
- */
+
 public class Main {
 
-
-    private static String nomUtilisateur = "Saisir un nom d'utilisateur";
-
-    public static void main(String[] args) {
-        System.out.println("Bienvenue");
-        System.out.println("Choix du mode de jeu : 1 - Challenger");
-        System.out.println("1 - Challenger");
-        System.out.println("2 - Défenseur");
-        System.out.println("3 - Duel");
-        System.out.println("4 - Quitter");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Saisissez un nom d'utilisateur : emilie");
-        String str = sc.nextLine();
-        System.out.println("Pseudo choisi: " + str);
-        System.out.println("Saisissez un mode de jeu: 1 - Challenger ");
-        int i = sc.nextInt();
-        displaySelectedGamingMode(i);
-
-
-
+    public static void main(String[] args) throws SaisieErroneeException {
         // write your code here
+        Game myGame = new Game();// instanciation par defaut de Game sans aucun mode.
 
 
-    }
-    /**
-     * Display a selected Gaming Mode
-     * @param nbGamingMode The Selected Gaming Mode
+        DefaultProperties myDefaultProperties = new DefaultProperties();
+        myDefaultProperties.readProperties(myGame);
+
+
+
+        myGame.launchMenu();// ici, launchMenu lancera le menu, qui a terme change le mode de jeu en fonction du choix de l'utiisateur
+        myGame.launchGame();
+
+        // myDefaultProperties.writeProperties( myGame );
+/*
+HumanRole hum = new HumanRole();
+ComputerRole comp = new ComputerRole();
+     hum.setSecretKey();
+     comp.setProposition();
+     hum.setClue(comp.getProposition());
+     //String inputClue, String secretKey, String proposition
+     System.out.println("Test sur variable3 vaut : "+myGame.isInputClueValid(hum.getClue(), hum.getSecretKey(), comp.getProposition()));
      */
-    public static void displaySelectedGamingMode(int nbGamingMode) {
-        if (nbGamingMode == 1) {
-            System.out.println("Vous avez choisi le mode de jeu : Challenger");
-        } else if (nbGamingMode == 2) {
-            System.out.println("Vous avez choisi le mode de jeu : Défenseur");
-        } else if (nbGamingMode == 3) {
-            System.out.println("Vous avez choisi le mode de jeu: Duel");
-        } else {
-            System.out.println("Vous n'avez pas choisi de menu parmi les choix proposés");
-        }
+        //    System.out.println("Test sur variable1 vaut : "+myGame.isInputCLueValid(variable1,1,4));
+        //  System.out.println("Test sur variable1 vaut : "+myGame.isInputCLueValid(variable1,4,1));
+        //System.out.println("Test sur variable2 vaut : "+myGame.isInputCLueValid(variable2,1,4));
+
+        //   myGame.printAllParametre();
+/*
+     HumanRole hum = new HumanRole();
+     ComputerRole comp = new ComputerRole();
+     Game game = new Game();
+     game.setKeyLength();
+
+     game.printAllParametre();
+     for(int i=0; i<5;i++){
+
+        comp.setSecretKey();
+        System.out.println("secretKey dans instance computer : "+ comp.getSecretKey());
+     }
+     System.out.println("innfos dans playerComputer");
+     comp.printPlayer();
+     System.out.println();
+     System.out.println("infos dans gameParametre");
+     game.printAllParametre();
+*/
+     /*
+     System.out.println();
+     System.out.println("DEBUT");
+     System.out.println( "Affiche Param avant human.setSecretKey() :" );
+
+     game.printAllParametre();
+     hum.setSecretKey();
+
+     System.out.println();
+     System.out.println( "human.setSecretKey, EFFECTUE" );
+
+     System.out.println();
+     System.out.println( "FIN Affiche Param FIN" );
+
+     System.out.println();
+     System.out.println("DEBUT");
+     System.out.println( "Affiche Param après human.setSecretKey() :" );
+
+     game.printAllParametre();
+
+     System.out.println();
+     System.out.println( "FIN Affiche Param FIN" );
+*/
+        //    hum.setProposition();
+        //    comp.setClue(hum.getProposition());
+
+//     game.printAllParametre();
     }
-
-
 }
