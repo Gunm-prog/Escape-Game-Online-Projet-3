@@ -1,5 +1,6 @@
 package com.ocr.emilie.player;
 
+import javax.management.ConstructorParameters;
 import java.util.*;
 
 public class ComputerRole extends Player implements PlayerType, ComputerMethods {
@@ -81,6 +82,7 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         return this.tentative;
     }
 
+    @Override
     public void updateTentative(String humanClue){
         //Traitement des indices joueur pour modifier la chaîne tentative. j!=0 ne va pas être lu au premier tour de boucle parce qu'il n'y a pas encore d'indices
         String newTentative="";
@@ -120,6 +122,7 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         //           System.out.println( "tentative ordi après modif : " + this.tentative );
     }
 
+    @Override
     public int getRandomNumberInRange ( int min, int max){
         if (min > max) {
             throw new IllegalArgumentException( "max must be greater than min [" + min + "/" + max + "]" );
@@ -133,11 +136,13 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         }
     }
 
+    @Override
     public void printPlayer(){
         super.printPlayer();
         System.out.println("tentative : "+tentative);
     }
 
+    @Override
     public void printAllParametre(){
         super.printAllParametre();
         this.printPlayer();

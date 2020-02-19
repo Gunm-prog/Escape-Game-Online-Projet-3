@@ -100,4 +100,8 @@ public  abstract class Player extends GameParametre{
         System.out.println(strFinal);
     }
 
+    public void devMode(){
+        printRound("secretKey");
+    }
+
 }

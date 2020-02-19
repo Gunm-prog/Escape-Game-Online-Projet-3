@@ -4,6 +4,8 @@ import java.util.Scanner;
 import com.ocr.emilie.mode.Mode;
 import com.ocr.emilie.player.ComputerRole;
 import com.ocr.emilie.player.HumanRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
@@ -19,6 +21,8 @@ import java.util.Scanner;
         protected static int keyLength;
         protected static int maxRound;
         protected static int currentRound;
+        protected static boolean devMode;
+        private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
         public void setKeyLength() {
             boolean doLeave;
@@ -36,8 +40,27 @@ import java.util.Scanner;
             } while (!doLeave);
         }
 
+        public String printChosenMode(){
+            String str="";
+            switch (chosenMode){
+                case(1):
+                    str = "Challenger";
+                    break;
+                case(2):
+                    str="Defenser";
+                    break;
+                case(3):
+                    str="Duel";
+                    break;
+                case(4):
+                    str ="Quitter";
+            }
+            return str;
+        }
+
         public void setKeyLength(String keyLength) {
             this.keyLength=Integer.valueOf( keyLength );
+            logger.info("Key length: " + this.keyLength);
         }
 
         public int getKeyLength() {
@@ -47,6 +70,7 @@ import java.util.Scanner;
         public void setMaxRound(int round) {
             this.isIntValid( String.valueOf( round ) );
             this.maxRound=round;
+            logger.info("Max round: " + this.maxRound);
         }
 
         public int getMaxRound() {
@@ -56,6 +80,7 @@ import java.util.Scanner;
         public void setCurrentRound(int newRound) {
             this.isIntValid( String.valueOf( newRound ) );
             this.currentRound+=newRound;//ce qui revient à faire currentRound= currentRound + newRound
+            logger.info("Current round: " + this.currentRound);
         }
 
         public int getCurrentRound() {
@@ -68,11 +93,15 @@ import java.util.Scanner;
 
         //Redéfinir le comportement de gamingMode
         public void setGamingMode(Mode mode) {
+
             this.gamingMode=mode;
+            logger.info("Gaming mode: " + this.gamingMode);
         }
 
         public void setHumanRole() {
+
             this.humanRole=new HumanRole();
+            logger.info("Human role: " + this.humanRole);
         }
 
         public HumanRole getHumanRole() {
@@ -80,7 +109,16 @@ import java.util.Scanner;
         }
 
         public void setComputerRole() {
+
             this.computerRole=new ComputerRole();
+            logger.info("Computer role: " + this.computerRole);
+        }
+
+        public void setChosenMode( int userChosenMode){
+            chosenMode= userChosenMode;
+            logger.info("Mode de jeu choisi: " + this.printChosenMode());
+
+
         }
 
         public void initializeMode() {
@@ -102,6 +140,7 @@ import java.util.Scanner;
             currentRound=0;
             computerRole.setIsItVictory( false );
             humanRole.setIsItVictory( false );
+            logger.info("Initialized mode");
 
         }
 
@@ -115,7 +154,15 @@ import java.util.Scanner;
             System.out.println( "currentRound : " + currentRound );
             this.humanRole.printPlayer();
             this.computerRole.printPlayer();
+            logger.info("All parameters printed");
         }
+
+        public void setDevMode(boolean test){
+            this.devMode=test;
+            logger.info("Developper mode: " + this.devMode);//permet d'avoir le mode on et off
+        }
+
+
 
 
     }

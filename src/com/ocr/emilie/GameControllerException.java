@@ -1,5 +1,7 @@
 package com.ocr.emilie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 import com.ocr.emilie.player.ComputerRole;
 import com.ocr.emilie.player.HumanRole;
@@ -9,6 +11,8 @@ import java.util.*;
 import com.ocr.emilie.SaisieErroneeException;
 
     public abstract class GameControllerException {
+
+        private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
         public static int charToInt(char c) {
             String strC=Character.toString( c );
@@ -40,7 +44,10 @@ import com.ocr.emilie.SaisieErroneeException;
                 }
             }
             if (test == false) {
+                logger.error("Unvalid clue!");
                 throw new SaisieErroneeException( "clue is not valid: " );
+            }else{
+                logger.info("Valid clue");
             }
         }
 
@@ -108,6 +115,7 @@ import com.ocr.emilie.SaisieErroneeException;
                 // exemple, "grut", "a" ect... ne passeront pas le test.
 
             } catch (NumberFormatException e) {
+                logger.error("not a number");
                 System.err.println( "This is not a number: " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -117,11 +125,12 @@ import com.ocr.emilie.SaisieErroneeException;
 
         public boolean isIntValidInInterval(String inputUser, int min, int max) {
             boolean test=true;
-            int input=Integer.parseInt( inputUser ); // convertion du String en Int
+            int input=Integer.parseInt( inputUser ); // conversion du String en Int
             try {
                 controlMinSmallerThanMax( min, max );
                 controlInterval( input, min, max );
             } catch (SaisieErroneeException e) {
+                logger.error("Saisie erronée");
                 System.out.println( "Saisie erronée : " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -135,6 +144,7 @@ import com.ocr.emilie.SaisieErroneeException;
             try {
                 controlStringLength( inputProposition, keyLength );
             } catch (SaisieErroneeException e) {
+                logger.error("Saisie erronée");
                 System.out.println( "Saisie erronée : " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -147,6 +157,7 @@ import com.ocr.emilie.SaisieErroneeException;
             try {
                 controlClueValidity( inputClue, secretKey, proposition );
             } catch (SaisieErroneeException e) {
+                logger.error("Saisie erronée");
                 System.out.println( "Saisie erronée : " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -157,9 +168,11 @@ import com.ocr.emilie.SaisieErroneeException;
         public boolean isItVictory(String proposition, String secretKey) {
             boolean test=false;
             if (proposition.equals( secretKey )) {
+                logger.info("Win");
                 System.out.println( "Bravo! Vous avez gagné!" );
                 test=true;
             } else if (proposition != secretKey) {//tranformer en else
+                logger.info("wrong proposition");
                 System.out.println( "Oops! La proposition est fausse!" );//dommage votre prop est fausse
             }
             return test;
@@ -168,12 +181,15 @@ import com.ocr.emilie.SaisieErroneeException;
         public boolean endGame(ComputerRole computerRole, HumanRole humanRole) {
             boolean test=false;
             if (!computerRole.getIsItVictory() && humanRole.getIsItVictory()) {
+                logger.info("Human player wins");
                 System.out.println( "Human player " + humanRole.getName() + " wins!!!" );
                 test=true;
             } else if (computerRole.getIsItVictory() && !humanRole.getIsItVictory()) {
+                logger.info("AI wins");
                 System.out.println( "AI wins!!!" );
                 test=true;
             } else if (computerRole.getIsItVictory() && humanRole.getIsItVictory()) {
+                logger.info("ex-aequo");
                 System.out.println( "Oh my Gosh! Both players win!!!" );
                 test=true;
             }
@@ -185,9 +201,11 @@ import com.ocr.emilie.SaisieErroneeException;
             boolean test=true;
             Scanner sc=new Scanner( System.in );
             if (!inputUser.equals( value )) {
+                logger.error("Unvalid answer");
                 System.out.println( "Not a valid answer! Please enter again: oui or non" );
                 test=false;
                 try {
+                    //TODO
                     throw new SaisieErroneeException( "Bad value for String" );
                 } catch (SaisieErroneeException e) {
 

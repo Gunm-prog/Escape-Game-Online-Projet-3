@@ -3,6 +3,8 @@ package com.ocr.emilie;
 
 import com.ocr.emilie.mode.*;
 
+
+
     public class Game extends GameParametre{
 
         //constructeur par défaut
@@ -19,31 +21,15 @@ import com.ocr.emilie.mode.*;
         this.gamingMode = mode;
     }
 */
-        public void printChosenMode(){
-            switch (chosenMode){
-                case(1):
-                    System.out.print("Challenger");
-                    break;
-                case(2):
-                    System.out.print("Defenser");
-                    break;
-                case(3):
-                    System.out.print("Duel");
-                    break;
-                case(4):
-                    System.out.print("Quitter");
-            }
-        }
+
         public void launchGame() throws SaisieErroneeException {
-            System.out.print("Emilie presents the : " );
-            this.printChosenMode();
-            System.out.println( " mode!");
+            System.out.println("Emilie presents the : " + this.printChosenMode() + " mode!");
             this.initializeMode();
             setMaxRound( 6 );
             do {
                 setCurrentRound( 1 );
                 System.out.println("Round: " + getCurrentRound() + "/" + getMaxRound());
-                this.gamingMode.launchMode( this.humanRole, this.computerRole ); // lance le mode de jeu
+                this.gamingMode.launchMode( this.devMode, this.humanRole, this.computerRole ); // lance le mode de jeu
 
             } while (!endGame( this.computerRole, this.humanRole ) && (this.currentRound < this.maxRound));
             System.out.println("The game is over." );
@@ -64,7 +50,7 @@ import com.ocr.emilie.mode.*;
 
                 if(isIntValid(numberGamingMode) && isIntValidInInterval(numberGamingMode,1,4))
                 {
-                    this.chosenMode = Integer.parseInt( numberGamingMode );
+                    setChosenMode(Integer.parseInt( numberGamingMode ));
                     switch (numberGamingMode) {
                         case ("1"):
                             this.setGamingMode( new Challenger() );

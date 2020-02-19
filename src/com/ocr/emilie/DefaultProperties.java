@@ -14,12 +14,13 @@ import java.util.Properties;
 
 
             try (InputStream input=new FileInputStream( "src/com/ocr/emilie/config.properties" )) {
-
                 Properties prop=new Properties();
 
                 // load a properties file
                 prop.load( input );
 
+                String propertiesDevMode=prop.getProperty("GameParametre.devMode");
+                myGame.setDevMode(Boolean.parseBoolean(propertiesDevMode));//conversion qui peut se faire only si chaine carac comprend false/true
                 // get the property value and print it out
                 String propertiesKeyLength=prop.getProperty( "GameParametre.keyLength" );
                 myGame.setKeyLength( propertiesKeyLength );

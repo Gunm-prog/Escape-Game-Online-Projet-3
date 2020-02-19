@@ -6,8 +6,11 @@ import com.ocr.emilie.player.HumanRole;
 
 public class Defenser extends GameControllerException implements Mode{
 
-    public void launchMode(HumanRole humanRole, ComputerRole computerRole) {
+    public void launchMode( boolean devMode, HumanRole humanRole, ComputerRole computerRole) {
 
+        if(devMode==true){
+            humanRole.devMode();
+        }
         computerRole.setProposition();
         computerRole.printRound("proposition");
         humanRole.printRound("secretKey");
