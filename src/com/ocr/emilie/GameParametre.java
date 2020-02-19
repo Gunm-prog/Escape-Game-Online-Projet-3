@@ -117,9 +117,7 @@ import java.util.Scanner;
             this.computerRole.printPlayer();
         }
 
-        public void printTurn() {
 
-        }
     }
 
 

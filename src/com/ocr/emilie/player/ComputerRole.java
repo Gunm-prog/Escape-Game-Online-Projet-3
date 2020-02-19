@@ -14,11 +14,12 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
     {
         super();
         this.type="Computer";
+        this.setName();
     }
     @Override
     public void setProposition() {
         String newProposition="";
-        System.out.print(" tentative = "+tentative+" ");
+        //System.out.print(" tentative = "+tentative+" ");
         for (int i=0; i < this.getKeyLength(); i++) {
             /*
                 bloc for qui va générer la proposition de l'ordinateur
@@ -75,6 +76,7 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         }
         this.tentative = newTentative;
     }
+    @Override
     public String getTentative(){
         return this.tentative;
     }

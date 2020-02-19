@@ -1,12 +1,23 @@
 package com.ocr.emilie;
 
 import com.ocr.emilie.player.*;
-
+//import org.apache.logging.log4j.Logger;
+//import org.apache.log4j.xml.DOMConfigurator;
+//import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
 
+    //static Logger logger = LogManager.getRootLogger();
+     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws SaisieErroneeException {
         // write your code here
+       // DOMConfigurator.configure("log4j2.xml");
+
+        logger.debug("Log4j appender configuration is successful !!");
+        logger.info("yoyoyo");
         Game myGame = new Game();// instanciation par defaut de Game sans aucun mode.
 
 

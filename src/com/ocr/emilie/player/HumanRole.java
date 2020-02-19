@@ -8,13 +8,14 @@ public class HumanRole extends Player implements PlayerType{
     public HumanRole(){
         super();
         this.type="Human";
+
     }
     @Override
     public void setProposition(){
         String newProposition;
         boolean doLeave;
         do{
-            System.out.println("nom du joueur = "+this.name);
+            //System.out.println("nom du joueur = "+this.name);
             System.out.println( "Veuillez saisir une proposition: " );
             newProposition = sc.nextLine();
             // L'opérateur ! n'est utilisable que sur des variables de type boolean ou sur des expressions produisant un type boolean(comparaison)
@@ -41,7 +42,7 @@ public class HumanRole extends Player implements PlayerType{
     public void setClue(String proposition) {
         String inputClue;
         do {
-            System.out.println( "Computer's proposition : " + proposition + " Compare your secret key and Print the clue: " + this.secretKey );
+            System.out.println( "Print the clue:" );
             inputClue=sc.nextLine();
         }while(!isInputClueValid(inputClue, this.secretKey, proposition));
         this.clue =  inputClue;

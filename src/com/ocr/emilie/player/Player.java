@@ -67,5 +67,37 @@ public  abstract class Player extends GameParametre{
         super.printAllParametre();
         this.printPlayer();
     }
+    public void printRound(String strType){
+        String str="";
+        String strFinal="";
+        switch(strType) {
+            case "secretKey":
+                str=getSecretKey();
+                break;
+            case "proposition":
+                str=getProposition();
+                break;
+            case "clue":
+                str=getClue();
+                break;
+            case"__":
+                for(int i=0;i<getKeyLength();i++){
+                    strFinal=strFinal + "__";
+                }
+                strFinal=strFinal +"__________________";
+                break;
+            default:
+                strFinal="not a valid String";
+        }
+        if(strFinal==""){
+            for (int i=0; i<this.getKeyLength();i++) {
+                strFinal=strFinal + "|" + str.charAt( i );
+            }
+                strFinal=strFinal + "|                  " +this.getName() +"'s "+ strType;
+
+        }
+
+        System.out.println(strFinal);
+    }
 
 }

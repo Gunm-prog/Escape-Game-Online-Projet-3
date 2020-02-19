@@ -8,12 +8,17 @@ public class Challenger extends GameControllerException implements Mode {
 
     public void launchMode(HumanRole humanRole, ComputerRole computerRole) {
 
-        System.out.println("secrete Key du computer = "+ computerRole.getSecretKey());
         humanRole.setProposition();
-        humanRole.printProposition();
-        humanRole.setIsItVictory(isItVictory(humanRole.getProposition(), computerRole.getSecretKey()) );
         computerRole.setClue( humanRole.getProposition());
-        computerRole.printClue();
+        humanRole.setIsItVictory(isItVictory(humanRole.getProposition(), computerRole.getSecretKey()) );
+
+        computerRole.printRound("secretKey");
+        computerRole.printRound("__");
+        humanRole.printRound("proposition");
+        computerRole.printRound("clue");
+
+
+
 
 
     }

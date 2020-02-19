@@ -42,6 +42,7 @@ import com.ocr.emilie.mode.*;
             setMaxRound( 6 );
             do {
                 setCurrentRound( 1 );
+                System.out.println("Round: " + getCurrentRound() + "/" + getMaxRound());
                 this.gamingMode.launchMode( this.humanRole, this.computerRole ); // lance le mode de jeu
 
             } while (!endGame( this.computerRole, this.humanRole ) && (this.currentRound < this.maxRound));

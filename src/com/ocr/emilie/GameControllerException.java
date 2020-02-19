@@ -24,13 +24,13 @@ import com.ocr.emilie.SaisieErroneeException;
                 char moins='-';
                 char egale='=';
                 if (charKey > charProp) {
-                    System.out.println( "charKey > charProp " + charKey + " > " + charProp );
+                // debug  // System.out.println( "charKey > charProp " + charKey + " > " + charProp );
                     if (inputClue.charAt( i ) != '+') {
                         System.out.println( "Bon char : +" );
                         test=false;
                     }
                 } else if (charKey < charProp && inputClue.charAt( i ) != '-') {
-                    System.out.println( "charKey < charProp " + charKey + " < " + charProp );
+               //debug     //System.out.println( "charKey < charProp " + charKey + " < " + charProp );
                     test=false;
                     System.out.println( "Bon char : -" );
                 } else if (charKey == charProp && inputClue.charAt( i ) != '=') {
@@ -213,7 +213,7 @@ import com.ocr.emilie.SaisieErroneeException;
                 }
             } catch (SaisieErroneeException e) {
                 test=false;
-                System.out.println( "Just put oui or non dammit!!!" );
+                System.out.println( "Just put oui or non" );
             }
             return test;
         }

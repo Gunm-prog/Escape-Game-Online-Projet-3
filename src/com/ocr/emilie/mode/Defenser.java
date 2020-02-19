@@ -9,11 +9,15 @@ public class Defenser extends GameControllerException implements Mode{
     public void launchMode(HumanRole humanRole, ComputerRole computerRole) {
 
         computerRole.setProposition();
-        computerRole.printProposition();
-        computerRole.isItVictory( computerRole.getProposition(), humanRole.getSecretKey() );
+        computerRole.printRound("proposition");
+        humanRole.printRound("secretKey");
         humanRole.setClue( computerRole.getProposition() );
-        humanRole.printClue();
+        computerRole.setIsItVictory(isItVictory( computerRole.getProposition(),humanRole.getSecretKey()) );
+        humanRole.printRound("clue");
         computerRole.updateTentative( humanRole.getClue() );
+
+
+
 
     }
 }
