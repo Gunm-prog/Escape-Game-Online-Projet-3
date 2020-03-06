@@ -6,10 +6,19 @@ import com.ocr.emilie.player.HumanRole;
 
 public class Duel extends GameControllerException implements Mode {
 
-    public void launchMode( boolean devMode, HumanRole humanRole, ComputerRole computerRole) {
+    /**
+     * launchMode du mode duel, va utiliser les comportement des deux précédents mode.
+     * De ce fait, il instenciera ces mode pour en faire usage.
+     *
+     * @param devMode, boolean, etat du mode dev
+     * @param humanRole, instance d'humanRole représentant le joueur humain
+     * @param computerRole, instance de computerRole représentant le joueur IA
+     */
+    public void launchMode( int currentRound, boolean devMode, HumanRole humanRole, ComputerRole computerRole) {
         Challenger challanger = new Challenger();
-        challanger.launchMode(devMode,  humanRole, computerRole );
+        challanger.launchMode(currentRound, devMode,  humanRole, computerRole );
+        computerRole.printRound("__");
         Defenser defenser = new Defenser();
-        defenser.launchMode(devMode, humanRole, computerRole );
+        defenser.launchMode(currentRound, devMode, humanRole, computerRole );
     }
 }

@@ -11,13 +11,21 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         remise à zero de proposition
         (puisqu'elle contient (sauf au premier round), proposition du round précédent)
     */
+
+    /**
+     * constructeur du joueur IA
+     * on en profite pour lui donner un nom
+     */
     public ComputerRole()//constructeur;
     {
         super();
         this.type="Computer";
         this.setName();
     }
-    @Override
+
+    /**
+     * permet de générer et stocker une proposition pour le joueur ordinateur dans l'attribut proposition.
+     */
     public void setProposition() {
         String newProposition="";
         //System.out.print(" tentative = "+tentative+" ");
@@ -42,7 +50,10 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         }
         this.proposition = newProposition;
     }
-    @Override
+
+    /**
+     * permet de générer et stocker la clée secrete du joueur ordinateur dans l'attribut secretKey
+     */
     public void setSecretKey() {
         String newSecretKey="";
         for (int i=0; i < this.getKeyLength(); i++) {//génération clé secrete aléatoire  de l'ordinteur
@@ -50,7 +61,14 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         }
         this.secretKey = newSecretKey;
     }
-    @Override
+
+    /**
+     * permet de générer et stocker pour le joueur ordinateur l'indice, dans l'attribut clue
+     * pour se faire on lui transmet la proposition de l'adversaire
+     * la méthode consiste à comparer chaque caractère de la proposition adverse et de la secretKey du joueur
+     * et d'indiquer si la valeur à trouver est +,- ou = à la proposition
+     * @param proposition , String proposition de l'adversaire.
+     */
     public void setClue(String proposition){
         String newClue="";//génération indice
         for (int j=0; j < this.getKeyLength(); j++) {
@@ -65,11 +83,18 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         this.clue = newClue;
     }
 
-    @Override
+    /**
+     * génère un nom pour le joueur ordinateur.
+     */
     public void setName(){
         this.name= "AI";
     }
 
+    /**
+     * initialise la chaine de recherche "tentative" pour le départ d'uen partie.
+     * la chaine aura alors des intervale maximum de min:0 à max:9
+     * elle aura la longueur de la taille clé et sera sous la forme 09090909...
+     */
     public void setTentative(){
         String newTentative="";
         for (int i=0; i < this.getKeyLength(); i++) {
@@ -77,12 +102,21 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         }
         this.tentative = newTentative;
     }
-    @Override
+
+    /**
+     *
+     * @return tentantive, String, la chaine de recherche de l'ordinateur
+     */
     public String getTentative(){
         return this.tentative;
     }
 
-    @Override
+    /**
+     * Mise à jour de la chaine tentative de l'ordinateur en fonction de l'indice du joueur adverse.
+     * par comparaison des caractères, resserera les intervales de recherche.
+     * exemple 09090909 pourra devenir 49056903.
+     * @param humanClue , String l'indice de l'adversaire
+     */
     public void updateTentative(String humanClue){
         //Traitement des indices joueur pour modifier la chaîne tentative. j!=0 ne va pas être lu au premier tour de boucle parce qu'il n'y a pas encore d'indices
         String newTentative="";
@@ -122,7 +156,12 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         //           System.out.println( "tentative ordi après modif : " + this.tentative );
     }
 
-    @Override
+    /**
+     * génération de chiffre aléatoire compris entre un minimum et un maximum
+     * @param min, int la valeur minimale
+     * @param max, int la valeur maximale
+     * @return une valeur aléatoire comprise entre min et max.
+     */
     public int getRandomNumberInRange ( int min, int max){
         if (min > max) {
             throw new IllegalArgumentException( "max must be greater than min [" + min + "/" + max + "]" );
@@ -136,13 +175,19 @@ public class ComputerRole extends Player implements PlayerType, ComputerMethods 
         }
     }
 
-    @Override
+    /**
+     * permet d'afficher dans la console les informations concercant le joueur
+     * @deprecated depuis la mise en place des logs
+     */
     public void printPlayer(){
         super.printPlayer();
         System.out.println("tentative : "+tentative);
     }
 
-    @Override
+    /**
+     * permet d'afficher tout les parametres de jeu
+     * @deprecated depuis la mise en place des logs.
+     */
     public void printAllParametre(){
         super.printAllParametre();
         this.printPlayer();

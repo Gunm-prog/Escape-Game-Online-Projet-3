@@ -20,24 +20,33 @@ import java.util.Properties;
                 prop.load( input );
 
                 String propertiesDevMode=prop.getProperty("GameParametre.devMode");
-                myGame.setDevMode(Boolean.parseBoolean(propertiesDevMode));//conversion qui peut se faire only si chaine carac comprend false/true
+                myGame.setDevMode(Boolean.parseBoolean(propertiesDevMode));//conversion qui peut se faire only si chaine carac comprend "false" ou "true"
+
                 // get the property value and print it out
                 String propertiesKeyLength=prop.getProperty( "GameParametre.keyLength" );
-                myGame.setKeyLength( propertiesKeyLength );
-                if(myGame.keyLength<=4){
+                myGame.setKeyLength( propertiesKeyLength ); // retient la keyLength mise par defaut dans le fichier properties.
+
+                // on calcul le nombre d'essaie maximum en fonction de la keyLength.
+                if(myGame.keyLength<=4){ // 4 essaie minimum
                     int maxRound=4;
                 }else {
                     int maxRound=myGame.getKeyLength() / 2 + 2; // permet de définir le nombre d'essais par rapport à la taille de la clé
-                    //  String propertiesMaxRound=prop.getProperty("GameParametre.maxRound");
+                    // sinon nombre d'essai = tailleClée / 2 + 2
                     myGame.setMaxRound( maxRound );
                 }
 
-            } catch (IOException ex) {
+            } catch (IOException ex) { // exception si la lecture du fichier properties est impossible.
                 ex.printStackTrace();
             }
 
 
         }
+
+        //méthode pour écrire dans le fichier properties, non nécessaire.
+        // j'ai voulu le faire pour m'entrainer et bien comprendre le fonctionnement.
+
+        //todo retirer?
+
   /*  public static void writeProperties(Game myGame){
         try(
                 OutputStream output=new FileOutputStream( "src/com/ocr/emilie/config.properties" ))

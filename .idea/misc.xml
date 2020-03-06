@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/resources/Javadoc" />
+    <option name="OPTION_DOCUMENT_TAG_USE" value="true" />
+    <option name="OPTION_DOCUMENT_TAG_AUTHOR" value="true" />
+    <option name="OPTION_DOCUMENT_TAG_VERSION" value="true" />
   </component>
   <component name="ProjectKey">
     <option name="state" value="project://e2804f05-5315-4fc6-a121-c522a6c26470" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="12" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="ScaladocSettings">
+    <option name="outputDir" value="C:\Users\Emilie\Git\Github\Projet3\Escape-Game-Online-Projet-3\resources\Javadoc" />
+    <option name="additionalFlags" value="" />
+    <option name="maxHeapSize" value="" />
+    <option name="docTitle" value="Escape-Game-Online-Projet-3 documentation" />
+    <option name="verbose" value="false" />
+    <option name="openInBrowser" value="false" />
   </component>
 </project>

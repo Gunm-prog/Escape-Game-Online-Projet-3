@@ -1,7 +1,10 @@
+/**
+ * @author Emilie BALSEN
+ */
 package com.ocr.emilie;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import java.util.Scanner;
 import com.ocr.emilie.player.ComputerRole;
 import com.ocr.emilie.player.HumanRole;
@@ -10,112 +13,138 @@ import java.util.*;
 
 import com.ocr.emilie.SaisieErroneeException;
 
-    public abstract class GameControllerException {
+/**
+ * La class GameController nous permet de réaliser des tests unitaires sur la cohérence des entrées ou génération de parametres du jeu.
+ *  elle représente la class final dans l'héritage Game<-GameParameter<-GameController
+ */
+public abstract class GameControllerException {
+        private static final Logger logger = Logger.getLogger(Main.class);
 
-        private static final Logger logger = LoggerFactory.getLogger(Main.class);
-
-        public static int charToInt(char c) {
+    /**
+     * methode de convertion rapide de char en int, afin de réaliser des comparaison numérique.
+     * @param c, char
+     * @return int valeur numérique du char.
+     */
+    public static int charToInt(char c) {
+            // methode pour convertir rapidement des char en Int, pour comparasion numérique.
             String strC=Character.toString( c );
             return Integer.parseInt( strC );
         }
 
-        public static void controlClueValidity(String inputClue, String secretKey, String proposition) throws SaisieErroneeException {
-            boolean test=true;
-            for (int i=0; i < secretKey.length(); i++) {//méthode vérifiant si l'indice donné par le joueur n'est pas erroné
-                int charKey=charToInt( secretKey.charAt( i ) );//extraction et convertion du char à index i
-                int charProp=charToInt( proposition.charAt( i ) );//idem
-                char plus='+';
-                char moins='-';
-                char egale='=';
-                if (charKey > charProp) {
-                // debug  // System.out.println( "charKey > charProp " + charKey + " > " + charProp );
-                    if (inputClue.charAt( i ) != '+') {
-                        System.out.println( "Bon char : +" );
-                        test=false;
-                    }
-                } else if (charKey < charProp && inputClue.charAt( i ) != '-') {
-               //debug     //System.out.println( "charKey < charProp " + charKey + " < " + charProp );
+    /**
+     *  méthode de vérification de la cohérence de l'indice entré par un utilisateur.
+     * @param inputClue, String indice donné par l'utilisateur
+     * @param secretKey, String secretKey de l'utilisateur
+     * @param proposition, String la proposition faite par l'adversaire
+     * @throws SaisieErroneeException, levée d'exception si l'entrée n'est pas bonne.
+     */
+    public static void controlClueValidity(String inputClue, String secretKey, String proposition) throws SaisieErroneeException {
+        boolean test=true;
+        for (int i=0; i < secretKey.length(); i++) {//méthode vérifiant si l'indice donné par le joueur n'est pas erroné
+            int charKey=charToInt( secretKey.charAt( i ) );//extraction et convertion du char à index i
+            int charProp=charToInt( proposition.charAt( i ) );//idem
+            if (charKey > charProp) {
+                // ici j'ai fait un if dans un if au lieu d'utiliser l'opérateur logique &&.
+                // je voulais pratiquer différente manière de faire dans mon apprentissage pour bien intégrer la logique.
+                if (inputClue.charAt( i ) != '+') {
+                    // resultat false si l'indice donné n'est pas "+" dans le cas ou il doit l'être
                     test=false;
-                    System.out.println( "Bon char : -" );
-                } else if (charKey == charProp && inputClue.charAt( i ) != '=') {
-                    System.out.println( "charKey = charProp " + charKey + " = " + charProp );
-                    test=false;
-                    System.out.println( "Bon char : =" );
                 }
-            }
-            if (test == false) {
-                logger.error("Unvalid clue!");
-                throw new SaisieErroneeException( "clue is not valid: " );
-            }else{
-                logger.info("Valid clue");
+            } else if (charKey < charProp && inputClue.charAt( i ) != '-') {
+                // resultat false si l'indice donné n'est pas "-" dans le cas ou il doit l'être
+                test=false;
+            } else if (charKey == charProp && inputClue.charAt( i ) != '=') {
+                // resultat false si l'indice donné n'est pas "=" dans le cas ou il doit l'être
+                test=false;
             }
         }
+        if (test == false) {
+            // si le test de vérification est false, on créer l'exception
+            logger.error( "Unvalid input clue! : " + inputClue );
+            throw new SaisieErroneeException( "clue is not valid: " );
+        } else {
+            logger.info( "Valid input clue : " + inputClue );
+        }
 
+    }
+
+
+    /**
+     * la méthode est générique, elle peut être utilisée avec n'importe quel chaine de caractère et de longueur passé en parametre.
+     * controle de la taille d'un string, que ce soit pour la clef secrète, les indices ou les propositions
+     * @param str String, la chaine a tester
+     * @param length, la longueur attendue
+     * @throws SaisieErroneeException, levée d'exception si le test est mauvais.
+     */
         public static void controlStringLength(String str, int length) throws SaisieErroneeException {
             if (str.length() != length) {
+                // création de l'exception si la taille ne correspond pas.
                 throw new SaisieErroneeException( "String length must be equals to " + length );
             }
         }
 
+    /**
+     * test  de la cohérence du min max passé en parametre:
+     * si je veux vérifier que l'utilisateur entre bien une valeur dans l'intervale proposé.
+     * exemple: l'intervale de recherche de l'ordinateur ou le choix du menu
+     * @param min , valeur minimale à tester
+     * @param max, valeur maximale à tester
+     * @throws SaisieErroneeException, leévé d'exception si le test est mauvais.
+     */
         public static void controlMinSmallerThanMax(int min, int max) throws SaisieErroneeException {
             if (min > max) {
-            /*
-            test  de la cohérence du min max imposé dans le test:
-            si je veux vérifier que l'utilisateur entre bien une valeur dans l'intervale proposé.
-            exemple: le menu choix de 1 à 4, éviter un mauvais choix utilisateur de 0 ou 5 ou +
-
-            ici je vérifie juste que mon intervalle donné à la méthode testIntInputUser, est cohérent pour les test qui suiveront
-            */
+            // une exception est levée si le test est false.
                 throw new SaisieErroneeException( "max: " + max + "must be greater than min:" + min );
             }
         }
 
+    /**
+     *  test de la position d'une valeur numérique dans un intervale minimum / maximum
+     * @param inputVal int valeur à tester
+     * @param min, int valeur minimale de l'intervale
+     * @param max, int valeur maximale de l'intervale
+     * @throws SaisieErroneeException, levée d'exception si le test n'est pas bon.
+     */
         public static void controlInterval(int inputVal, int min, int max) throws SaisieErroneeException {
-            if (inputVal < min || inputVal > max) { // test sur le int
-            /*
-                ici test effectif de la valeur donnée par l'utilisateur avec l'intervale des possibles transmis en arguments de la méthode.
-                */
+            if (inputVal < min || inputVal > max) {
+               // si la valeur n'est pas dans l'intervalle, min, max, lève une exception
                 throw new SaisieErroneeException( "Please, respect number interval [" + min + "/" + max + "]" );
             }
         }
 
-        public boolean isIntValid(String inputUser) {
+    /**
+     * test du caractère strictement numérique d'une chaine de caractère.
+     *  la chaine pouvant être de grande longueur, plus de 9 caractère (limite du type int)
+     * il faudra dnc traiter la chaine par portion de 9, longueur maximale du format int
+     * il faut donc chercher combien de fois la chaine de caractere contient de séquences de 9 chiffres
+     * traiter ces portions dans une boucle autant de fois que le resultat du calcul si dessus
+     *  donc nombre de traitement = chaine.keylentgh() / par 9
+     *  ensuite pour les cas ou la dernière sous-chaine est inférieur à 9
+     *  int resteSubstring = inputUser.lenght % modulo * 9
+     *
+     * @param inputUser String la chaine à traiter
+     * @return boolean resultat true ou false du test
+     */
+    public boolean isIntValid(String inputUser) {
             boolean test=true;
             try {
-            /*
-            pour une chaine de 1 à 20
-            on veut savoir si cette chaine est entierement numerique
-            probleme: le type int en java ne peut pas dépasser la taille de 9 caractères
-            on ne peut pas utiliser le type long parce qu'il est possible que notre chaine soit petite
-            donc on va devoir chercher combien de fois la chaine de caractere contient de séquences de 9 chiffres
-            pour cela on fait taille de la chaine(keylentgh) / par 9
-            le resultat de ce calcul nous donnera le nombre de fois où on pourra traiter 9 caracteres dans la chaine
-            nous ferons donc une boucle qui tournera travaillera autant de fois que ce resultat
-            dans cette boucle on traitera la vérification numérique sur 9 caractères
-            int nbSubstring =  inputUser.length / 9
-            reste une variable (int resteSubstring = inputUser.lenght % modulo * 9)
-            */
-
-
-                if (inputUser.length() > 9) {
-                    int nbSubstring=inputUser.length() / 9;
-                    int resteSubstring=inputUser.length() % 9;
-                    for (int i=0; i < nbSubstring; i++) {
-                        String substr=inputUser.substring( 9 * i, 8 + 9 * i );
-                        Integer.valueOf( substr );
+                if (inputUser.length() > 9) { // si la chaine à traiter est plus grand que 9 caractères.
+                    int nbSubstring=inputUser.length() / 9; //stockage du nombre de sous-chaine de 9 caractère à traiter.
+                    int resteSubstring=inputUser.length() % 9; // stockage de la taille de la dernière sous-chaine qui peut être inférieur à 9
+                    for (int i=0; i < nbSubstring; i++) { // nombre de tour de boucle = nombre de sous-chaine de 9 trouvée.
+                        String substr=inputUser.substring( 9 * i, 8 + 9 * i ); // déplacement de sous-chaine en sous-chaine dans la boucle.
+                        Integer.valueOf( substr ); // test : tentative de convertion en int de la sous-chaine.
                     }
-                    if (resteSubstring != 0) {
+                    if (resteSubstring != 0) { // même traitement pour la dernière sous-chaine si elle existe.
                         String substr=inputUser.substring( nbSubstring * 9, inputUser.length() );
-                        Integer.valueOf( substr );
+                        Integer.valueOf( substr ); //test : tentative de convertion eau format int
                     }
-                } else {
-                    Integer.valueOf( inputUser );
+                } else { // pour les cas ou la chaine à traiter ne fait pas plus de 9 caractère, traitement en une seule fois.
+                    Integer.valueOf( inputUser ); //test : tentative de convertion eau format int
                 }
-                //tentative de conversion de la valeur donnée par l'utilisateur, ne fonctionnera que si c'est une valeur numérique
-                // exemple, "grut", "a" ect... ne passeront pas le test.
 
-            } catch (NumberFormatException e) {
-                logger.error("not a number");
+            } catch (NumberFormatException e) { // si l'un des test ne fonctionne pas, le catch lèvera l'exception.
+                logger.error("Input number not valid number :" + inputUser);
                 System.err.println( "This is not a number: " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -123,28 +152,44 @@ import com.ocr.emilie.SaisieErroneeException;
             return test;
         }
 
+    /**
+     * méthode de test combinant les test de cohérence sur les intervale
+     * controle: si le min est bien strictement plus petit que le max
+     * controle: si la valeur à vérifier est bien une valeur numérique
+     * controle: si la valeur donné est bien dans l'intervale donné.
+     * @param inputUser, String la valeur à tester
+     * @param min , int valeur minimale de l'intervale
+     * @param max, int valeur maximale de l'intervale
+     * @return boolean le resultat du test true ou false en levant une exception
+     */
         public boolean isIntValidInInterval(String inputUser, int min, int max) {
             boolean test=true;
             int input=Integer.parseInt( inputUser ); // conversion du String en Int
             try {
                 controlMinSmallerThanMax( min, max );
                 controlInterval( input, min, max );
-            } catch (SaisieErroneeException e) {
-                logger.error("Saisie erronée");
+            } catch (SaisieErroneeException e) { // si l'un des test est false, retour d'exception.
+                logger.error("False parameter interval : " + e);
                 System.out.println( "Saisie erronée : " + e );
-                System.out.println( "Please enter again" );
+                System.out.println( "Please try again" );
                 test=false;
             }
             return test;
         }
 
-        public boolean isIntEqualsKeyLength(String inputProposition, int keyLength) {//Int de isIntEqualsKeyLength peut correspondre
-            //à la proposition ou la secretKey(à n'importe quelle valeur numérique)
+    /**
+     * vérification de la taille d'une entrée utilisateur confore à la taille attendue
+     * @param inputString, Int de isIntEqualsKeyLength peut correspondre à la proposition ou la secretKey ou l'indice
+     * @param keyLength int taille de la clé secrete attendue
+     * @return boolean resultat du test true ou false en levant une exception
+     */
+        public boolean isIntEqualsKeyLength(String inputString, int keyLength) {
             boolean test=true;
             try {
-                controlStringLength( inputProposition, keyLength );
+                // le test est effectué par la méthode controlStringLength;
+                controlStringLength( inputString, keyLength );
             } catch (SaisieErroneeException e) {
-                logger.error("Saisie erronée");
+                logger.error("False input length : "+ e);
                 System.out.println( "Saisie erronée : " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -152,12 +197,21 @@ import com.ocr.emilie.SaisieErroneeException;
             return test;
         }
 
+    /**
+     * test la validitée d'un indice donné par l'utilisateur
+     * @param inputClue , String indice donnée par l'utilisateur à tester
+     * @param secretKey, String clée secrète de l'utilisateur
+     * @param proposition, String proposition faite par l'adversaire
+     * @return boolean, resultat du test true ou false en levant une exception
+     */
         public boolean isInputClueValid(String inputClue, String secretKey, String proposition) {
             boolean test=true;
             try {
+                controlStringLength( inputClue, secretKey.length() );// controle la longueur de la chaine
+                // le test est effectué par la méthode controlClueValidity;
                 controlClueValidity( inputClue, secretKey, proposition );
             } catch (SaisieErroneeException e) {
-                logger.error("Saisie erronée");
+                logger.error("false input clue : "+ e);
                 System.out.println( "Saisie erronée : " + e );
                 System.out.println( "Please enter again" );
                 test=false;
@@ -165,73 +219,75 @@ import com.ocr.emilie.SaisieErroneeException;
             return test;
         }
 
+    /**
+     * controle de correspondance entre une propostion et une clée secrete.
+     * @param proposition, String la proposition a tester
+     * @param secretKey, String la clée secrète à trouver
+     * @return boolean True ou false, avec affichage en console d'un message correspondant
+     */
         public boolean isItVictory(String proposition, String secretKey) {
+            // controle de victoire;
             boolean test=false;
             if (proposition.equals( secretKey )) {
-                logger.info("Win");
-                System.out.println( "Bravo! Vous avez gagné!" );
+                logger.info("We have a Winner : proposition_"+proposition+ " = secretKey_"+secretKey );
+                System.out.println( "We have a Winner!" );
                 test=true;
-            } else if (proposition != secretKey) {//tranformer en else
-                logger.info("wrong proposition");
-                System.out.println( "Oops! La proposition est fausse!" );//dommage votre prop est fausse
+            } else {// si il n'y a pas d'égalité
+                logger.info("wrong proposition : proposition_"+proposition+ " = secretKey_"+secretKey);
+                System.out.println( "Oops! Wrong proposition! Try again..." );//dommage votre prop est fausse
             }
             return test;
         }
 
+    /**
+     * methode qui va vérifier l'existance et gérer les différents scénari de victoire possible
+     * @param computerRole instance de computerRole
+     * @param humanRole instance de humanRole
+     * @return boolean true ou false, ainsi qu'un message correspondant à la situation
+     */
         public boolean endGame(ComputerRole computerRole, HumanRole humanRole) {
+            // gestion de fin de jeu par victoire.
             boolean test=false;
             if (!computerRole.getIsItVictory() && humanRole.getIsItVictory()) {
-                logger.info("Human player wins");
+                logger.info("Winner : Human Player");
                 System.out.println( "Human player " + humanRole.getName() + " wins!!!" );
                 test=true;
             } else if (computerRole.getIsItVictory() && !humanRole.getIsItVictory()) {
-                logger.info("AI wins");
-                System.out.println( "AI wins!!!" );
+                logger.info("Winner : Computer Player");
+                System.out.println( "AI wins!!!" + computerRole.getName() + " wins!!!" );
                 test=true;
             } else if (computerRole.getIsItVictory() && humanRole.getIsItVictory()) {
-                logger.info("ex-aequo");
+                logger.info("Winner : Human and Computer Players. Ex-aequo");
                 System.out.println( "Oh my Gosh! Both players win!!!" );
                 test=true;
             }
             return test;
         }
 
-
-        public boolean controlStringValue(String inputUser, String value) throws SaisieErroneeException {
-            boolean test=true;
-            Scanner sc=new Scanner( System.in );
-            if (!inputUser.equals( value )) {
-                logger.error("Unvalid answer");
-                System.out.println( "Not a valid answer! Please enter again: oui or non" );
-                test=false;
-                try {
-                    //TODO
-                    throw new SaisieErroneeException( "Bad value for String" );
-                } catch (SaisieErroneeException e) {
-
-                }
-            } else {
-                test=true;
-            }
-            return test;
-        }
-
+    /**
+     * controle d'entré utilisateur, ou l'on attends une réponse positive ou négative
+     * @param inputUser, String contenant la valeur à tester
+     * @return boolean resultat du test, + un message en cas de levée d'exception
+     * @throws SaisieErroneeException
+     */
         public boolean controlYesNo(String inputUser)throws SaisieErroneeException {
-            boolean test=true;
+            boolean test;
             try {
-                switch (inputUser) {
-                    case ("oui"):
-                        controlStringValue( inputUser, "oui" );
-                        break;
-                    case ("non"):
-                        controlStringValue( inputUser, "non" );
+                switch(inputUser.toLowerCase()){
+                    case "yes":
+                    case "oui":
+                    case "no":
+                    case "non":
+                        // si inputUser est égale à yes, oui, non, no, test OK.
+                        test = true;
                         break;
                     default:
+                        // pour toutes autres valeurs, levée d'exception.
                         throw new SaisieErroneeException( "Bad value for String" );
                 }
             } catch (SaisieErroneeException e) {
                 test=false;
-                System.out.println( "Just put oui or non" );
+                System.out.println( "Just put yes/oui or no/non" );
             }
             return test;
         }
