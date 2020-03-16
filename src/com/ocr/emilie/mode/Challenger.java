@@ -1,6 +1,6 @@
 package com.ocr.emilie.mode;
 
-import com.ocr.emilie.GameControllerException;
+import com.ocr.emilie.game.GameControllerException;
 import com.ocr.emilie.player.ComputerRole;
 import com.ocr.emilie.player.HumanRole;
 

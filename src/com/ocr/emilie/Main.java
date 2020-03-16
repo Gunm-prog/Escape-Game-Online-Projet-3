@@ -3,7 +3,9 @@
  */
 package com.ocr.emilie;
 
-import com.ocr.emilie.player.*;
+import com.ocr.emilie.game.Game;
+import com.ocr.emilie.game.GameControllerException;
+import com.ocr.emilie.game.SaisieErroneeException;
 import org.apache.log4j.Logger;
 
 //import org.apache.logging.log4j.Logger;
@@ -14,7 +16,7 @@ import org.apache.log4j.Logger;
 public class Main {
 
     //static Logger logger = LogManager.getRootLogger();
-     private static final Logger logger = Logger.getLogger(GameControllerException.class);
+     private static final Logger logger = Logger.getLogger( GameControllerException.class);
 
     public static void main(String[] args) throws SaisieErroneeException {
         // write your code here

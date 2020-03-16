@@ -1,15 +1,13 @@
 package com.ocr.emilie;
 
+import com.ocr.emilie.game.Game;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
-import java.io.*;
-import java.util.Properties;
-
-    public class DefaultProperties {
+public class DefaultProperties {
         public static void readProperties(Game myGame) {
 
 
@@ -27,8 +25,8 @@ import java.util.Properties;
                 myGame.setKeyLength( propertiesKeyLength ); // retient la keyLength mise par defaut dans le fichier properties.
 
                 // on calcul le nombre d'essaie maximum en fonction de la keyLength.
-                if(myGame.keyLength<=4){ // 4 essaie minimum
-                    int maxRound=4;
+                if(myGame.getKeyLength()<=4){ // 4 essaie minimum
+                    myGame.setMaxRound(4);
                 }else {
                     int maxRound=myGame.getKeyLength() / 2 + 2; // permet de définir le nombre d'essais par rapport à la taille de la clé
                     // sinon nombre d'essai = tailleClée / 2 + 2
@@ -45,7 +43,7 @@ import java.util.Properties;
         //méthode pour écrire dans le fichier properties, non nécessaire.
         // j'ai voulu le faire pour m'entrainer et bien comprendre le fonctionnement.
 
-        //todo retirer?
+
 
   /*  public static void writeProperties(Game myGame){
         try(

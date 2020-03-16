@@ -1,6 +1,6 @@
 package com.ocr.emilie.player;
 
-import com.ocr.emilie.GameParametre;
+import com.ocr.emilie.game.GameParametre;
 
 public  abstract class Player extends GameParametre{
     protected String name; // nom du joueur

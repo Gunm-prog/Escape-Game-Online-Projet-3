@@ -1,4 +1,4 @@
-package com.ocr.emilie;
+package com.ocr.emilie.game;
 
 public class SaisieErroneeException extends Exception {
 

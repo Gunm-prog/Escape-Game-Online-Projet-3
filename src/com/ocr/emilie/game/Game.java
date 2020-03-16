@@ -1,4 +1,4 @@
-package com.ocr.emilie;
+package com.ocr.emilie.game;
 
 
 import com.ocr.emilie.mode.*;
@@ -11,7 +11,7 @@ public class Game extends GameParametre{
 
     /**
      * constructeur par defaut de la class Game
-     * celui-ci va instancier les différents role humain et IA nécessaire à son fonctionnement.
+     * celui-ci va instancier les différents rôles humain et IA nécessaire à son fonctionnement.
      */
     public Game() {
             System.out.println( "Welcome" ); //Affiche "Bienvenue" à l'écran

@@ -1,24 +1,20 @@
 /**
  * @author Emilie BALSEN
  */
-package com.ocr.emilie;
+package com.ocr.emilie.game;
 
+import com.ocr.emilie.Main;
 import org.apache.log4j.Logger;
 
-import java.util.Scanner;
 import com.ocr.emilie.player.ComputerRole;
 import com.ocr.emilie.player.HumanRole;
-
-import java.util.*;
-
-import com.ocr.emilie.SaisieErroneeException;
 
 /**
  * La class GameController nous permet de réaliser des tests unitaires sur la cohérence des entrées ou génération de parametres du jeu.
  *  elle représente la class final dans l'héritage Game<-GameParameter<-GameController
  */
 public abstract class GameControllerException {
-        private static final Logger logger = Logger.getLogger(Main.class);
+        private static final Logger logger = Logger.getLogger( Main.class);
 
     /**
      * methode de convertion rapide de char en int, afin de réaliser des comparaison numérique.

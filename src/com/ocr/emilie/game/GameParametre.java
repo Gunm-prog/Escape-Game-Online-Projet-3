@@ -1,4 +1,4 @@
-package com.ocr.emilie;
+package com.ocr.emilie.game;
 
 import java.util.Scanner;
 import com.ocr.emilie.mode.Mode;
@@ -6,10 +6,7 @@ import com.ocr.emilie.player.ComputerRole;
 import com.ocr.emilie.player.HumanRole;
 import org.apache.log4j.Logger;
 
-
-import java.util.Scanner;
-
-    public abstract class GameParametre extends GameControllerException {
+public abstract class GameParametre extends GameControllerException {
         /*
             stockera toutes les infos et methodes communes a chaque mode de jeu
          */
