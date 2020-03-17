@@ -26,7 +26,7 @@ FONCTIONNALITÉS SUPPLÉMENTAIRES :
 
 - MODE DÉVELOPPEUR: le mode développeur peut s'activer via le fichier configProperties en le passant à "True".
 
-- LOGS utilisation du fichier LOG4J2 avec prise en compte de deux niveau d'affichage: Log Info et Log Error pour l'affichage des exceptions.
+- LOGS utilisation du fichier LOG4J avec prise en compte de deux niveau d'affichage: Log Info et Log Error pour l'affichage des exceptions.
 
 - PROPERTIES: le fichier de configuration des properties contient des variables concernant: la longueur de la clé secrète (secretKeyLength), le mode développeur (lorsqu'il est activé) permet d'afficher la combinaison secrète que l'adversaire doit trouver (selon le mode de jeu)
 
@@ -37,13 +37,14 @@ Adresse url du projet:
 https://github.com/Gunm-prog/Escape-Game-Online-Projet-3/
 Sélectionnez "Clone or Download" afin de cloner ou de télécharger le repository de ce projet depuis Github.
 
-Chargement du projet depuis Intellij:
--Ouvrir Intellij;
--Effectuez "new Project from Version Control" et choisissez "Git".
--Saisissez l'url du repository que vous venez de cloner. Vous pouvez lancer l'application depuis votre IDE
+Depuis Intellij:
+- Ouvrir Intellij;
+- Dans la barre de menu principale, cliquez sur "File", "new Project from Version Control" et choisissez "Git".
+- Saisissez l'url du repository: https://github.com/Gunm-prog/Escape-Game-Online-Projet-3 et cliquez sur "Cloner".
 
-Execution du programme:
-Dans le menu principal, cliquez sur Run, puis dans le menu déroulant de Run, cliquez sur Run 'Main.main()'.
+EXECUTION DU PROGRAMME
+
+- Dans le menu principal, cliquez sur Run, puis dans le menu déroulant de Run, cliquez sur Run 'Main'.
 Votre code va alors s'exécuter et le résultat apparaît dans la console.
 
 
