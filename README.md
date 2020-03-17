@@ -37,5 +37,15 @@ Adresse url du projet:
 https://github.com/Gunm-prog/Escape-Game-Online-Projet-3/
 Sélectionnez "Clone or Download" afin de cloner ou de télécharger le repository de ce projet depuis Github.
 
+Chargement du projet depuis Intellij:
+-Ouvrir Intellij;
+-Dans le menu principal, sélectionnez VCS (Obtenir à partir du contrôle de version) ou, si aucun projet n'est actuellement ouvert, cliquez sur Obtenir à partir du contrôle de version sur l'écran de bienvenue;
+-Dans la boîte de dialogue Obtenir à partir du contrôle de version, spécifiez l'URL du référentiel distant que vous souhaitez cloner: https://github.com/Gunm-prog/Escape-Game-Online-Projet-3/;
+-Cliquez sur cloner.
+
+Execution du programme:
+Dans le menu principal, cliquez sur Run, puis dans le menu déroulant de Run, cliquez sur Run 'Main.main()'.
+Votre code va alors s'exécuter et le résultat apparaît dans la console.
+
 
 Copyright : Emilie BALSEN
